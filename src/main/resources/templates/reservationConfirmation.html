@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Book Reservation - Confirmation</title>
+    <style type="text/css">
+        body {
+            max-width: 800px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden; /* To apply border-radius to the whole table */
+        }
+        table, td, th {
+            border: 1px solid #bdc3c7;
+        }
+        th {
+            background-color: #3498db; /* A friendly blue tone */
+            color: white;
+            padding: 12px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+        td {
+            padding: 15px;
+            font-size: 1em;
+        }
+        tr:nth-child(even) {
+            background-color: #ecf0f1; /* Light gray for zebra stripes */
+        }
+        b {
+            font-weight: 700;
+            color: #34495e;
+        }
+        .back-link {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .back-link a {
+            padding: 10px 20px;
+            background-color: #2ecc71; /* Success green */
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .back-link a:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <header>
+        <h1>Book Reservation Confirmed!</h1>
+    </header>
+
+    <p>Thank you for placing your reservation. Here are the details:</p>
+
+    <table>
+        <tr>
+            <th colspan="2">Your Reservation Details</th>
+        </tr>
+        <tr>
+            <td><b>Reader Name</b></td>
+            <td th:text="${reservation.readerName}"></td>
+        </tr>
+        <tr>
+            <td><b>Reader Address</b></td>
+            <td th:text="${reservation.readerAddress}"></td>
+        </tr>
+        <tr>
+            <td><b>Client IP Address</b></td>
+            <td th:text="${clientIp}"></td>
+        </tr>
+        <tr>
+            <td><b>Reservation for Book</b></td>
+            <td th:text="${reservation.bookTitle}"></td>
+        </tr>
+        <tr>
+            <td><b>Number of copies</b></td>
+            <td th:text="${reservation.numberOfCopies}"></td>
+        </tr>
+    </table>
+
+    <div class="back-link">
+        <a th:href="@{/books}">Return to Book List</a>
+    </div>
+</section>
+</body>
+</html>

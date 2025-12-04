@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${book} != null ? 'Edit Book' : 'Add Book'">Book Form</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f4f7f9; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding-top: 50px; }
+        .card { background-color: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); width: 100%; max-width: 450px; }
+        h1 { color: #334155; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        label { display: block; margin-bottom: 8px; color: #475569; font-weight: 600; }
+        input[type="text"], input[type="number"], select { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; transition: border-color 0.2s; }
+        input[type="text"]:focus, input[type="number"]:focus, select:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2); }
+        button[type="submit"] { background-color: #2563eb; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background-color 0.2s; }
+        button[type="submit"]:hover { background-color: #1d4ed8; }
+        .actions { margin-top: 25px; display: flex; justify-content: space-between; align-items: center; }
+        .cancel-link { color: #64748b; text-decoration: none; padding: 12px 20px; border: 1px solid #cbd5e1; border-radius: 6px; transition: background-color 0.2s; }
+        .cancel-link:hover { background-color: #f1f5f9; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1 th:text="${book} != null ? 'Edit Book Details' : 'Add New Book'">Book Form</h1>
+
+    <form th:action="${book} != null ? @{'/books/edit/' + ${book.id}} : @{/books/add}" method="post">
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" th:value="${book?.title}" required/>
+
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" th:value="${book?.genre}" required/>
+
+        <label for="averageRating">Average Rating (0.0 - 10.0):</label>
+        <input type="number" step="0.1" min="0" max="10" id="averageRating" name="averageRating"
+               th:value="${book?.averageRating}" required/>
+
+        <label for="authorId">Select Author:</label>
+        <select id="authorId" name="authorId" required>
+            <option value="">-- Select Author --</option>
+            <option th:each="a : ${authors}"
+                    th:value="${a.id}"
+                    th:text="${a.name + ' ' + a.surname + ' (' + a.country + ')'}"
+                    th:selected="${book != null and book.author != null and a.id == book.author.id}">
+            </option>
+        </select>
+
+        <div class="actions">
+            <button type="submit" th:text="${book} != null ? 'Update Book' : 'Save Book'">Save</button>
+            <a th:href="@{/books}" class="cancel-link">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
